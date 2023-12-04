@@ -1,2 +1,2 @@
 # fedora-infra
-Deployment configurations for the Fedora infrastructure
+This repository contains deployment configurations and documentation for the Fedora infrastructure
