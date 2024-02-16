@@ -19,15 +19,10 @@ RUN dnf install -y osh-hub osh-hub-conf-devel openssl krb5-workstation
 # TODO: Shall `/var/log/osh/` be a persistennt path? Shall this log be redirected to another logging
 # service like splunk?
 RUN touch /var/log/osh/hub/hub.log && chown :root /var/log/osh/hub/hub.log
-# TODO: Shall this should be copied through ansible?
-RUN touch /usr/lib/python3.9/site-packages/osh/hub/settings_local.py && chown :root /usr/lib/python3.9/site-packages/osh/hub/settings_local.py
-# TODO: Shall this should be copied through ansible?
-RUN touch /etc/httpd/conf.d/osh-hub-httpd.conf && chown :root /etc/httpd/conf.d/osh-hub-httpd.conf
 # TODO: Set correct permissions on below files.
-RUN chown :root /usr/lib/python3.9/site-packages/osh/hub/settings_local.py /etc/httpd/conf.d/osh-hub-httpd.conf
 RUN chown -R :root /var/log/osh/hub /var/lib/osh/ /opt/app-root/ /var/run/
 # TODO: Shall /var/lib/osh be a persistent path? Remove chmod command for it?
-RUN chmod -R g+rw /var/log/osh/hub  /opt/app-root/ /var/run/ /usr/lib/python3.9/site-packages/osh/hub/settings_local.py /etc/httpd/conf.d/osh-hub-httpd.conf
+RUN chmod -R g+rw /var/log/osh/hub  /opt/app-root/ /var/run/
 
 # TODO: Disable `mod_security` in apache httpd.
 # This is a temporary workaround to allow large report uploads from worker to the hub.
