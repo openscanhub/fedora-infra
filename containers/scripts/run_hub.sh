@@ -37,7 +37,7 @@ fi
 # hub work.
 if [ "$(/usr/lib/python3.9/site-packages/osh/hub/manage.py dumpdata scan.MockConfig)" = "[]" ]; then
     /usr/lib/python3.9/site-packages/osh/hub/manage.py loaddata \
-        /usr/lib/python3.9/site-packages/osh/hub/{errata,scan}/fixtures/initial_data.json
+        /usr/lib/python3.9/site-packages/osh/hub/scan/fixtures/initial_data.json
 fi
 
 
