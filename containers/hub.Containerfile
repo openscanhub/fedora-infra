@@ -35,7 +35,7 @@ RUN chmod -R g+rw /var/log/osh/hub  /opt/app-root/ /var/run/ /usr/lib/python3.9/
 RUN rm -f /etc/httpd/conf.d/mod_security.conf
 
 # Run a dummy SMTP server in background
-python3 -m smtpd -n -c DebuggingServer localhost:8025 >> /tmp/emails.log &
+RUN python3 -m smtpd -n -c DebuggingServer localhost:8025 >> /tmp/emails.log &
 
 EXPOSE 8080
 EXPOSE 8443
