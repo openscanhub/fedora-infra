@@ -1,0 +1,30 @@
+#! /bin/bash -x
+
+cd "$(dirname "$(readlink -f "$0")")"
+
+arch=
+case $0 in
+*x86_64) arch=x86_64 ;;
+*aarch64) arch=aarch64 ;;
+*) echo "unknown arch" ; exit 1 ;;
+esac
+
+. ./config
+
+
+# TODOs:
+# - Generate ssh key if it is not present, from resalloc server execute:
+# `aws ec2 import-key-pair --key-name "openscanhub" --public-key-material fileb://~/.ssh/id_rsa.pub`
+# - Automate the creation of security-group and subnet.
+# - Use separate security group and subnet for staging and production.
+# - Find a way to quickly switch between availability zones.
+exec resalloc-aws-new \
+    --aws-profile default \
+    --ssh-key-name "openscanhub" \
+    --security-group-id sg-0d5aa772cd31d79a5 \
+    --possible-subnet subnet-0d708d2a4b17c7dbc \
+    --ami "${aws_image[$arch]}" \
+    --instance-type "${aws_instance_type[$arch]}" \
+    --root-volume-size 256 \
+    --playbook /etc/resallocserver/vm-provisioning/ansible/playbook.yml \
+    "$@"
