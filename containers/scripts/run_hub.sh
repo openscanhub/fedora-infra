@@ -9,20 +9,19 @@ if [[ -e /src ]]; then
     # rm -f /etc/httpd/conf.d/ssl.conf
 
     for _ in $(seq 100); do
-        # TODO: Put hostname of the db01 server here
         pg_isready -h fedora-osh-db && break
         sleep 0.5
     done
 
     popd
 else
-    # We are in OpenShift deployment. Copy configuration files from persistent storage.
+    # We are in the OpenShift deployment. Copy configuration files from persistent storage.
     # Probably set the up through ansible
     # curl -o /mnt/osh-configs/osh-hub-httpd.conf https://raw.githubusercontent.com/siteshwar/openscanhub-deployment-configs/main/fedora-infra/osh-hub-httpd.conf 
     # curl -o /mnt/osh-configs/settings_local.ci.py https://raw.githubusercontent.com/siteshwar/openscanhub-deployment-configs/main/fedora-infra/settings_local.ci.py
     # cp /mnt/osh-configs/settings_local.ci.py /usr/lib/python3.9/site-packages/osh/hub/settings_local.py
     # cp /mnt/osh-configs/osh-hub-httpd.conf /etc/httpd/conf.d/osh-hub-httpd.conf
-    echo "Do nothing here!"
+    echo "We are in OpenShift. Container should be already configured through Ansible."
     # cp /etc/keytabs/service.keytab
 fi
 
@@ -40,6 +39,14 @@ if [ "$(/usr/lib/python3.9/site-packages/osh/hub/manage.py dumpdata scan.MockCon
         /usr/lib/python3.9/site-packages/osh/hub/scan/fixtures/initial_data.json
 fi
 
-
+if [[ -e /src ]]; then
+    echo "Woker should be started by podman-compose"
+else
+    # We are in the OpenShift deployment.
+    echo "Running resalloc-agent-spawner in the background. Logs would appear in /var/log/resalloc-agent-spawner/agent-spawner.log"
+    # TODO: This process should be watched over, probably at OpenShift level.
+    /usr/bin/resalloc-agent-spawner &> /dev/null &
+fi
 /usr/bin/run-httpd
+# Leave it here for debugging in the future.
 # sleep inf
