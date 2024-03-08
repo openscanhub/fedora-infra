@@ -1,0 +1,15 @@
+#! /bin/sh
+
+# This is now shipped in resalloc-server package.  Use that once it is stable.
+
+die() { echo "$*" >&2 ; exit 1; }
+
+set -x
+set -e
+test -n "$RESALLOC_NAME"
+test -n "$RESALLOC_RESOURCE_DATA"
+
+# we only put IP out in spawning script, nothing else
+set -- $(echo "$RESALLOC_RESOURCE_DATA" | base64 --decode)
+IP=$1
+ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o ConnectTimeout=20 "ec2-user@$IP" true

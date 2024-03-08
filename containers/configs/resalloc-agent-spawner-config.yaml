@@ -1,0 +1,64 @@
+# Configuration for resalloc-agent-spawner.service.  YAML format.
+# Specify groups of agents within the `agent_groups` section that agent spawner
+# should take care of.
+
+agent_groups:
+  workers:
+    # These commands are executed in the background async as they may take
+    # quite some time to process.  If `cmd_prepare` fails (exit non-zero), the
+    # agent immediately marked for removal.  `cmd_terminate` exit status is
+    # just ignored (we need to remove the agent no matter what).
+
+    # Prepare the agent.  Variable $RESALLOC_RESOURCE_DATA (base64 encoded)
+    # is provided in the script environment.
+    cmd_prepare: /usr/bin/osh-worker-manager --create-worker $(echo "$AGENT_SPAWNER_RESOURCE_DATA" | base64 -d | head -1) &> /var/log/resalloc-agent-spawner/$$-preparation.log
+    # cmd_prepare: echo "$RESALLOC_RESOURCE_DATA" | base64 -d | head -1 &> /tmp/$$-preparation.log
+
+    # Prepare the agent for termination.  Upon finishing this command, the
+    # resalloc resource ticket is closed and the resource deallocated.
+    cmd_terminate: /usr/bin/osh-worker-manager --delete-worker $(echo "$AGENT_SPAWNER_RESOURCE_DATA" | base64 -d | head -1) &> /var/log/resalloc-agent-spawner/$$-deletion.log
+    # cmd_terminate: /sbin/osh-resalloc --delete-worker "$(echo "$RESALLOC_RESOURCE_DATA" | base64 -d | head -1)"
+
+    # The following commands are executed synchronously by the agent spawner
+    # daemon (polling).  Please keep them super fast to avoid overall system #
+    # halt!
+
+    # The `cmd_converge_to` needs to print integer number (the currently ideal
+    # number of agents to converge to) onto stdout.
+    cmd_converge_to: /usr/bin/osh-worker-manager --workers-needed
+
+    # Agents may decide to stop themselves.  This hook is used to detect
+    # such a case -> if exit status 0 is returned, agent is going to be
+    # terminated (cmd_terminate is called against it).
+    cmd_check_finished: /usr/bin/osh-worker-manager --check-finished $(echo "$AGENT_SPAWNER_RESOURCE_DATA" | base64 -d | head -1) &> /var/log/resalloc-agent-spawner/$$-check-finished.log
+
+    # Some agents might be expected to run long-term (or indefinitely).  This
+    # hook helps us to politely ask the agent whether it is OK to terminate.
+    # Returning exit status 1 means the agent can not be terminated.
+    # Returning 0 means that the agent was prepared for termination, and
+    # this has to be removed now.  This is useful for gently downsizing
+    # the agent count while converging to `cmd_converge_to`.
+    #
+    # TODO: Implement `try_release` hook. Here are a few notes about it:
+    # - The `try_release` hook would be called on all agents until it removes number of agents before matching ideal number of running agents.
+    # - Setting max_load to 0 unconditionally would cause issues with preallocated agents, as they may be removed before being used. The
+    #   idea of using resalloc-agent-spawner would be useless in that case, as we can directly use resalloc without it.
+    # - We should investigate if there may be an actual race condition in kobo, that stops us from deleting the node in `try_release` hook.
+    cmd_try_release: /bin/false
+
+    # List of resalloc tags to use while requesting tickets
+    tags:
+      - arch_x86_64
+
+# Note that we use the 'request_survives_server_restart' resalloc client option,
+# so the resalloc server must be running to avoid the overall system hang!
+resalloc_server: "http://resalloc-server:49100"
+
+# Where to log events.
+logfile: /var/log/resalloc-agent-spawner/agent-spawner.log
+
+# How to connect to redis-db.  By default connects to 127.0.0.1:6379.
+#redis_db: null
+redis_host: redis
+#redis_port": null
+#redis_password": null

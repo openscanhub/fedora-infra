@@ -1,0 +1,31 @@
+# this file is sourced by several scripts in this directory
+
+env=unknown
+if test -f instance; then
+    env=`cat instance`
+fi
+
+declare -A \
+    aws_image \
+    aws_instance_type \
+
+# image=b8a0e7a5-fa58-4e2b-9fa5-e2c95159d3a2
+
+# Use `c9s` image from CentOS community.
+# https://www.centos.org/download/aws-images/
+# TODO: We should build a custom image from it by running `osh-worker-role`.
+# That would reduce the time to spin up new workers.
+aws_image[x86_64]=ami-0322b3bb1843afd17
+
+# We only support `x86_64` arch for OpenScanHub.
+# https://issues.redhat.com/browse/OSH-60
+# aws_image[aarch64]=ami-005c0bc715b4dab5a
+
+# Static analysis requires significant amount of resources.
+# Use as powerful machines as we could.
+# https://aws.amazon.com/ec2/instance-types/c6i/
+# aws_instance_type[x86_64]=c6i.4xlarge
+aws_instance_type[x86_64]=c6i.2xlarge
+# aws_instance_type[aarch64]=t4g.medium
+
+export ANSIBLE_HOST_KEY_CHECKING=False

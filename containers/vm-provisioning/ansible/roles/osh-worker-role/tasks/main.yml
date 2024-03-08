@@ -1,0 +1,47 @@
+---
+# tasks file for osh-worker-role
+# TODO: SELinux should be enabled in the future.
+- name: Keep SELinux in permissive mode
+  ansible.posix.selinux:
+    state: disabled
+
+- name: "Update to latest packages"
+  ansible.builtin.dnf:
+    name: '*'
+    state: latest
+
+- name: Install epel
+  yum:
+    name: "epel-release"
+    state: latest
+    disable_gpg_check: true
+
+# dnf copr enable @openscanhub/devel
+- name: Enable openscanhub repository
+#   ansible.builtin.dnf:
+#     enable_plugin: copr
+#     name: "@openscanhub/devel"
+  ansible.builtin.shell: dnf copr enable -y @openscanhub/devel
+
+- name: Install osh-worker package
+  ansible.builtin.dnf:
+    name: osh-worker
+    state: latest
+
+# Tasks are run as csmock user
+- name: Add csmock group
+  ansible.builtin.group:
+    name: csmock
+    state: present
+
+# csmock user needs root privilleges as it runs mock in the background.
+- name: Add csmock user to root group
+  ansible.builtin.user:
+    name: csmock
+    group: csmock
+    append: true
+    groups: root,mock
+
+- name: Print status of the worker
+  ansible.builtin.debug:
+    msg: Worker virtual machine is set up, but `osh-worker` is not started. It should be started by `osh-worker-manager` from osh-hub.
