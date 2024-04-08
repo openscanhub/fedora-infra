@@ -22,6 +22,11 @@ else
     # cp /mnt/osh-configs/settings_local.ci.py /usr/lib/python3.9/site-packages/osh/hub/settings_local.py
     # cp /mnt/osh-configs/osh-hub-httpd.conf /etc/httpd/conf.d/osh-hub-httpd.conf
     echo "We are in OpenShift. Container should be already configured through Ansible."
+
+    # In OpenShift, processes are run with arbitrary users, but group is `root`.
+    # Ensure `root` group has write access to the newly created files.
+    echo "Setting umask ..."
+    umask 0002
     # cp /etc/keytabs/service.keytab
 fi
 
