@@ -1,5 +1,41 @@
 // This is still a draft
 
+## Steps to deploy
+
+These are the steps to follow to deploy on the staging environment.
+
+- Commands are executed from the batcave server, so you need to ssh into it:
+```
+ssh <FAS_USERNAME>@batcave01.iad2.fedoraproject.org
+```
+
+- In the ssh session execute the `openscanhub` playbook to deploy the project:
+```
+sudo rbac-playbook -l staging openshift-apps/openscanhub.yml
+```
+
+- To delete the entire project and test in a clean environment:
+```
+sudo rbac-playbook -l staging -t delete openshift-apps/openscanhub.yml
+```
+
+Use `-l production` to deploy on the production environment. Skipping `-l` would deploy on both the
+environments.
+
+
+## AWS availability zones
+
+While changing availability zones use these commands to create key pair, security groups and
+subnets:
+
+From the `resalloc-server` container:
+
+```
+aws ec2 import-key-pair --key-name "openscanhub" --public-key-material fileb://~/.ssh/id_rsa.pub
+TODO: Add command to create a security group.
+TODO: Add command to create a subnet.
+```
+
 ## Workflow
 - Commit to the `main` branch in GitHub should trigger GitHub Actions CI. 
 - Spin up containers for hub, worker, client and db from the latest commit to main branch.
