@@ -48,6 +48,9 @@ RUN rm -f /etc/httpd/conf.d/mod_security.conf
 EXPOSE 8080
 EXPOSE 8443
 
+# Override default footer to mention the mailing list.
+COPY configs/footer.html /etc/osh/hub/templates/footer.html
+
 # Custom `redhat.css` changes color of the header to blue.
 # This should be removed when https://issues.redhat.com/browse/OSH-198 is resolved.
 COPY configs/redhat.css /usr/lib/python3.9/site-packages/osh/hub/static-assets/css/redhat.css
