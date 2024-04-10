@@ -1,4 +1,4 @@
-# Builds should be available on https://quay.io/organization/openscanhub-fedora-infra/ocp
+# Builds should be available on https://quay.io/organization/openscanhub-fedora-infra/fedora-osh-hub
 # TODO: Check if we can use ubi.
 # resalloc dependencies require a subscription.
 # FROM registry.access.redhat.com/ubi9/httpd-24

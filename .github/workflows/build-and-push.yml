@@ -17,9 +17,7 @@ jobs:
           registry_token: ${{ secrets.REGISTRY_TOKEN }}
           dockerfile: "containers/hub.Containerfile"
           docker_context: "containers"
-          # TODO: Rename this image to `fedora-osh-hub` (or osh-hub).
-          # Keep the name consistent with container name in OpenShift.
-          image_name: "ocp"
+          image_name: "fedora-osh-hub"
           tag: "staging"
   build-and-push-resalloc-server:
     runs-on: ubuntu-20.04
