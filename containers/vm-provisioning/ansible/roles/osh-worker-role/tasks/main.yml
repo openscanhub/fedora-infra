@@ -1,9 +1,8 @@
 ---
 # tasks file for osh-worker-role
-# TODO: SELinux should be enabled in the future.
-- name: Keep SELinux in permissive mode
+- name: Enable SELinux
   ansible.posix.selinux:
-    state: disabled
+    state: enabled
 
 - name: "Update to latest packages"
   ansible.builtin.dnf:
