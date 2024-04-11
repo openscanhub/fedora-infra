@@ -2,6 +2,7 @@
 # tasks file for osh-worker-role
 - name: Enable SELinux
   ansible.posix.selinux:
+    policy: targeted
     state: enforcing
 
 - name: "Update to latest packages"
