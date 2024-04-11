@@ -17,10 +17,10 @@
 
 # dnf copr enable @openscanhub/devel
 - name: Enable openscanhub repository
-#   ansible.builtin.dnf:
-#     enable_plugin: copr
-#     name: "@openscanhub/devel"
-  ansible.builtin.shell: dnf copr enable -y @openscanhub/devel
+  community.general.copr:
+     # TODO: use `staging` or `production` in the future.
+     # https://github.com/openscanhub/fedora-infra/issues/42
+     name: "@openscanhub/devel"
 
 - name: Install osh-worker package
   ansible.builtin.dnf:
