@@ -45,8 +45,13 @@ COPY vm-provisioning /etc/resallocserver/vm-provisioning
 # RUN git clone --branch main https://github.com/siteshwar/openscanhub-deployment-configs.git /etc/resallocserver/openscanhub-deployment-configs
 # COPY openscanhub-deployment-configs /etc/resallocserver/openscanhub-deployment-configs
 
-USER 1001
 ENV HOME=/var/lib/resallocserver
 ENV CONFIG_DIR=/etc/resallocserver
+
+# `ControlPath` should be writable by `root` group.
+RUN chmod -R g+rwx $HOME/.ssh
+COPY configs/ssh_config $HOME/.ssh/config
+
+USER 1001
 CMD /usr/bin/resalloc-server
 # CMD sleep inf
