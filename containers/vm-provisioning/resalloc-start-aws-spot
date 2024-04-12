@@ -26,5 +26,6 @@ exec resalloc-aws-new \
     --ami "${aws_image[$arch]}" \
     --instance-type "${aws_instance_type[$arch]}" \
     --root-volume-size 256 \
+    --additional-volume-size 16 \
     --playbook /etc/resallocserver/vm-provisioning/ansible/playbook.yml \
     "$@"

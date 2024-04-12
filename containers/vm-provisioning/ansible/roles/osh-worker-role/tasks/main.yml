@@ -1,5 +1,20 @@
 ---
 # tasks file for osh-worker-role
+
+# Swap is required for packages with high resource consumption. For example, webkitgtk.
+- name: Create swap partition
+  # TODO: Add a check to verify we are on AWS.
+  community.general.filesystem:
+    fstype: swap
+    # TODO: This path should be kept in a variable, as it may vary across clouds.
+    dev: /dev/nvme1n1
+
+- name: Mount swap partition
+  # TODO: Add a check to verify we are on AWS.
+  # `ansible.posix.mount` does not support swap fstype.
+  # https://github.com/ansible/ansible/issues/29647
+  ansible.builtin.shell: swapon /dev/nvme1n1
+
 - name: Enable SELinux
   ansible.posix.selinux:
     policy: targeted
