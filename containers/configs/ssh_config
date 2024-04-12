@@ -1,0 +1,13 @@
+Host *
+   IdentityFile ~/.ssh/id_rsa
+   StrictHostKeyChecking  no
+   UserKnownHostsFile /dev/null
+   ServerAliveInterval 20
+   ServerAliveCountMax 5
+   ConnectTimeout 60
+   # Be careful with patterns so the socket filename is not too long:
+   # unix_listener: path "/var/lib/resallocserver/.ssh/.ssh_socket_vmhost-x86-copr04.rdu-cc.fedoraproject.org_22_copr.8bslqLJka7WO6iIQ" too long for Unix domain socket: Connection reset by peer
+   # See: https://stackoverflow.com/questions/34829600/why-is-the-maximal-path-length-allowed-for-unix-sockets-on-linux-108
+   ControlPath=~/.ssh/skt_%h_%p_%r
+   ControlMaster=auto
+   ControlPersist=60
