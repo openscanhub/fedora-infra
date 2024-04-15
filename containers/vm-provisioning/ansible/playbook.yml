@@ -2,6 +2,8 @@
   become: true
   vars:
     ansible_ssh_user: ec2-user
+    env: "{{ lookup('ansible.builtin.env', 'env') }}"
+
   roles:
     - osh-worker-role
 
