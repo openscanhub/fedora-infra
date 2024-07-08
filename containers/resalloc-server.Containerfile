@@ -55,5 +55,7 @@ RUN chmod -R g+rwx $HOME/.ssh
 COPY configs/ssh_config $HOME/.ssh/config
 
 USER 1001
-CMD bash -c /usr/bin/resalloc-server
+
+# This is a hack to use bash to avoid zombie processes
+CMD bash -c "/usr/bin/resalloc-server || exit 1"
 # CMD sleep inf
