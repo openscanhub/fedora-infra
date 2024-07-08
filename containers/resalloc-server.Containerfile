@@ -55,5 +55,5 @@ RUN chmod -R g+rwx $HOME/.ssh
 COPY configs/ssh_config $HOME/.ssh/config
 
 USER 1001
-CMD /usr/bin/resalloc-server
+CMD bash -c /usr/bin/resalloc-server
 # CMD sleep inf
