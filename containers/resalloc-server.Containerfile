@@ -20,10 +20,12 @@ RUN dnf install -y ansible \
                    findutils \
                    openssh-clients \
                    postgresql \
+                   procps-ng \
                    python3-psycopg2 \
                    resalloc \
                    resalloc-aws \
                    resalloc-server \
+                   util-linux \
                    vim
 
 # copy filesystem setup
