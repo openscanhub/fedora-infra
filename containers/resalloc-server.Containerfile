@@ -56,6 +56,9 @@ COPY configs/ssh_config $HOME/.ssh/config
 
 USER 1001
 
-# This is a hack to use bash to avoid zombie processes
+# bash should be pid 1 in this container
+# so zombie processes may not be created
+# they would be collected by bash
+# https://github.com/openscanhub/fedora-infra/issues/61
 CMD bash -c "/usr/bin/resalloc-server || exit 1"
 # CMD sleep inf
