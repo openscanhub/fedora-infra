@@ -55,6 +55,12 @@
     append: true
     groups: root,mock
 
+# This is required for `find-unicode-control`
+- name: Install csmock-plugin-unicontrol package
+  ansible.builtin.dnf:
+    name: csmock-plugin-unicontrol
+    state: latest
+
 - name: Print status of the worker
   ansible.builtin.debug:
     msg: Worker virtual machine is set up, but `osh-worker` is not started. It should be started by `osh-worker-manager` from osh-hub.
