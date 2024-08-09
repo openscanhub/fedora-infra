@@ -62,9 +62,9 @@
     state: latest
 
 # This is required for `clippy`
-- name: Install csmock-plugins-clippy package
+- name: Install csmock-plugin-clippy package
   ansible.builtin.dnf:
-    name: csmock-plugins-clippy
+    name: csmock-plugin-clippy
     state: latest
 
 - name: Print status of the worker
