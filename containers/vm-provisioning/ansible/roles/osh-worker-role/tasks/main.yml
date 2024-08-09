@@ -61,6 +61,12 @@
     name: csmock-plugin-unicontrol
     state: latest
 
+# This is required for `clippy`
+- name: Install csmock-plugins-clippy package
+  ansible.builtin.dnf:
+    name: csmock-plugins-clippy
+    state: latest
+
 - name: Print status of the worker
   ansible.builtin.debug:
     msg: Worker virtual machine is set up, but `osh-worker` is not started. It should be started by `osh-worker-manager` from osh-hub.
