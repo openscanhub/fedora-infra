@@ -61,4 +61,4 @@ USER 1001
 # they would be collected by bash
 # https://github.com/openscanhub/fedora-infra/issues/61
 CMD bash -c "/usr/bin/resalloc-server || exit 1"
-# CMD sleep inf
+# CMD bash -c "sleep inf || exit 1"
