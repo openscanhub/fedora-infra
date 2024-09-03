@@ -60,6 +60,5 @@ USER 1001
 # so zombie processes may not be created
 # they would be collected by bash
 # https://github.com/openscanhub/fedora-infra/issues/61
-# CMD bash -c "/usr/bin/resalloc-server || exit 1"
-# Bring down resalloc-server temporarily
-CMD sleep inf
+CMD bash -c "/usr/bin/resalloc-server || exit 1"
+# CMD sleep inf
