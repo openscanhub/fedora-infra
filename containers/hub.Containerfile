@@ -14,7 +14,7 @@ RUN dnf config-manager --set-enabled crb extras-common
 RUN rm /etc/rpm/macros.image-language-conf
 
 #TODO: How to enable installation of a specifiec commit?
-# RUN dnf copr enable -y @openscanhub/devel
+RUN dnf copr enable -y @openscanhub/devel
 
 # Keep these here as a reference for debugging in the future.
 # RUN dnf copr enable -y praiskup/resalloc
