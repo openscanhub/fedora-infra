@@ -15,9 +15,6 @@ RUN rm /etc/rpm/macros.image-language-conf
 
 #TODO: How to enable installation of a specifiec commit?
 # RUN dnf copr enable -y @openscanhub/devel
-# TODO: REMOVE `packit/openscanhub-openscanhub-234` WHEN UPSTREAM PR IS MERGED:
-# https://github.com/openscanhub/openscanhub/pull/234
-RUN dnf copr enable -y packit/openscanhub-openscanhub-234
 
 # Keep these here as a reference for debugging in the future.
 # RUN dnf copr enable -y praiskup/resalloc
