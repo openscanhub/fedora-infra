@@ -67,16 +67,6 @@
     name: csmock-plugin-clippy
     state: latest
 
-# Workaround for https://github.com/openscanhub/fedora-infra/issues/75
-# TODO: Remove when https://github.com/csutils/csmock/issues/188 is resolved
-- name: Copy /etc/mock/site-defaults.cfg
-  ansible.builtin.copy:
-    src: site-defaults.cfg
-    dest: /etc/mock/site-defaults.cfg
-    owner: root
-    group: mock
-    mode: 0644
-
 - name: Print status of the worker
   ansible.builtin.debug:
     msg: Worker virtual machine is set up, but `osh-worker` is not started. It should be started by `osh-worker-manager` from osh-hub.
