@@ -40,7 +40,7 @@
 # TODO: Remove when https://github.com/csutils/csmock/pull/189 is in epel
 - name: Enable workaround for dynamic dependencies
   community.general.copr:
-     name: "packit/csutils-csmock-189"
+     name: "packit/csutils-csmock-192"
      chroot: epel-9-x86_64
 
 - name: Install osh-worker package
