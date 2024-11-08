@@ -76,10 +76,10 @@
 
 # Workaround for https://lists.fedoraproject.org/archives/list/openscanhub@lists.fedoraproject.org/thread/GY2XQBNNDHR5VHGA24MBAUBKNAJPUDZW/
 # TODO: Remove when latest gcc is released
-- name: Copy /etc/mock/site-defaults.cfg
+- name: Copy /etc/mock/fedora-rawhide-gcc-latest-x86_64.cfg
   ansible.builtin.copy:
-    src: site-defaults.cfg
-    dest: /etc/mock/site-defaults.cfg
+    src: fedora-rawhide-gcc-latest-x86_64.cfg
+    dest: /etc/mock/fedora-rawhide-gcc-latest-x86_64.cfg
     owner: root
     group: mock
     mode: 0644
