@@ -36,13 +36,6 @@
   community.general.copr:
      name: "@openscanhub/{{ env }}"
 
-# Workaround for https://github.com/openscanhub/fedora-infra/issues/75
-# TODO: Remove when https://github.com/csutils/csmock/pull/189 is in epel
-- name: Enable workaround for dynamic dependencies
-  community.general.copr:
-     name: "packit/csutils-csmock-192"
-     chroot: epel-9-x86_64
-
 - name: Install osh-worker package
   ansible.builtin.dnf:
     name: osh-worker
