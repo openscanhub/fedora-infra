@@ -55,6 +55,12 @@
     append: true
     groups: root,mock
 
+# This is required for `/etc/koji.conf.d/stream.conf`.
+- name: Install centpkg package
+  ansible.builtin.dnf:
+    name: centpkg
+    state: latest
+
 # This is required for `find-unicode-control`
 - name: Install csmock-plugin-unicontrol package
   ansible.builtin.dnf:

@@ -26,7 +26,8 @@ RUN dnf config-manager --add-repo https://pagure.io/fedora-infra/ansible/raw/mai
 # TODO: There may be a race condition here, as it installs latest `osh-hub` package, that may have
 # been built after a specific commit.
 # tzdata is a dependency for django
-RUN dnf install -y osh-hub osh-hub-conf-devel openssl krb5-workstation tzdata fedora-messaging
+# `centpkg` is required for `/etc/koji.conf.d/stream.conf`
+RUN dnf install -y osh-hub osh-hub-conf-devel openssl krb5-workstation tzdata fedora-messaging centpkg
 
 RUN dnf install -y resalloc-agent-spawner osh-worker-manager
 
