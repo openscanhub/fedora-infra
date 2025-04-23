@@ -6,7 +6,7 @@ on:
       - main
 jobs:
   build-and-push-osh-hub:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Build and push to quay.io registry
         uses: sclorg/build-and-push-action@v4
@@ -20,7 +20,7 @@ jobs:
           image_name: "fedora-osh-hub"
           tag: "staging"
   build-and-push-resalloc-server:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Build and push to quay.io registry
         uses: sclorg/build-and-push-action@v4
