@@ -32,9 +32,15 @@
     disable_gpg_check: true
 
 # dnf copr enable @openscanhub/devel
-- name: Enable openscanhub repository
+- name: Enable openscanhub copr repository
   community.general.copr:
      name: "@openscanhub/{{ env }}"
+
+# dnf copr enable @codescan/csutils
+# This installs the development version of csmock and related packages
+- name: Enable csutils copr repository
+  community.general.copr:
+     name: "@codescan/csutils"
 
 - name: Install osh-worker package
   ansible.builtin.dnf:
