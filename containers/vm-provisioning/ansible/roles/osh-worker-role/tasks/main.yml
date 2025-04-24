@@ -95,6 +95,33 @@
     group: mock
     mode: 0644
 
+# Beging Hack
+# This is a hack to install known-false-positives from a RPM.
+# It should be removed when https://github.com/csutils/csmock/issues/201 is resolved.
+
+- name: Clone known false positives git repository
+  ansible.builtin.git:
+    repo: 'https://github.com/openscanhub/known-false-positives.git'
+    dest: /tmp/known-false-positives
+
+# It is required to build the RPM
+- name: Install csdiff package
+  ansible.builtin.dnf:
+    name: csdiff
+    state: latest
+
+- name: Build the known-false-positives RPM
+  ansible.builtin.shell:
+    chdir: /tmp/known-false-positives
+    cmd: ./make-rpm.sh
+
+- name: Install known-false-positives RPM
+  ansible.builtin.dnf:
+    name: "~/rpmbuild/RPMS/noarch/*.rpm"
+    state: present
+
+# End Hack
+
 - name: Print status of the worker
   ansible.builtin.debug:
     msg: Worker virtual machine is set up, but `osh-worker` is not started. It should be started by `osh-worker-manager` from osh-hub.
