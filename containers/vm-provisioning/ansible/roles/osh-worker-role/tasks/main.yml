@@ -110,15 +110,10 @@
     name: csdiff
     state: latest
 
-- name: Build the known-false-positives RPM
+- name: Build and install the known-false-positives RPM
   ansible.builtin.shell:
     chdir: /tmp/known-false-positives
-    cmd: ./make-rpm.sh
-
-- name: Install known-false-positives RPM
-  ansible.builtin.dnf:
-    name: "~/rpmbuild/RPMS/noarch/*.rpm"
-    state: present
+    cmd: './make-rpm.sh && dnf install -y ~/rpmbuild/RPMS/noarch/known-false-positives-*.noarch.rpm'
 
 # End Hack
 
