@@ -85,6 +85,12 @@
     name: csmock-plugin-pylint
     state: latest
 
+# This is required for `smatch`
+- name: Install csmock-plugin-smatch package
+  ansible.builtin.dnf:
+    name: csmock-plugin-smatch
+    state: latest
+
 # Workaround for https://lists.fedoraproject.org/archives/list/openscanhub@lists.fedoraproject.org/thread/GY2XQBNNDHR5VHGA24MBAUBKNAJPUDZW/
 # TODO: Remove when latest gcc is released
 - name: Copy /etc/mock/fedora-rawhide-gcc-latest-x86_64.cfg
