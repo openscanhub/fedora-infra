@@ -28,9 +28,6 @@ RUN dnf install -y ansible \
                    util-linux \
                    vim
 
-# Update commmunity.general collection to a version compatible with python-3.12
-RUN ansible-galaxy collection install community.general --upgrade
-
 # copy filesystem setup
 # COPY files/ /
 
