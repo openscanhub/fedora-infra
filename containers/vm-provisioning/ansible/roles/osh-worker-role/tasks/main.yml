@@ -29,8 +29,8 @@
 # OpenSSL 3.5 is strict about validating certifcates
 # and it breaks systems on older certificates.
 - name: Update CA trust store
-   ansible.builtin.command: update-ca-trust extract
-   changed_when: false
+  ansible.builtin.command: update-ca-trust extract
+  changed_when: false
 
 - name: Install epel
   yum:
